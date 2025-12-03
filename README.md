@@ -51,3 +51,19 @@ office environment:
 
     pip install pyobjc
     pip install pyobjc-framework-CoreWLAN
+
+## References
+
+Yagi-Uda principles
+* https://en.wikipedia.org/wiki/Yagi%E2%80%93Uda_antenna
+
+Very Practical Yagi-Uda from Ham radio long-timer
+* https://www.youtube.com/watch?v=SKumu3twopc
+
+Connecting to Mac USB to external antenna with MacOS support (I hope!?!)
+* https://www.amazon.com/dp/B08BJS8FXD
+
+My focus is 2.4GHz Wifi (Raspbery Pi Picc 2 W). The latest Wifi are at higher frequencies and I have not explored their use.
+
+2.4 GHz Wifi Yagi-Uda 2.4 GHz that I will test, (will update this README.md on success!):
+* https://www.amazon.com/dp/B00OCJYPCY
