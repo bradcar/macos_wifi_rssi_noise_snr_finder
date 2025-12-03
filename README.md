@@ -9,9 +9,11 @@ TODO: Create Wifi locator using Yagi-Uda Antenna using RSSI, Noise, and SNR
 3) By moving Yagi-Uda Antenna shoud be able to use direction of antenna to locate a Raspberry Pi Pico 2 W.
 
 ### Usage:
+Simple output of results 
+
     python3 wifi_snr_rssi_noise.py
 
-Or use program in Terminal Curses output:
+Or use program in terminal whicgh has curses output:
 
     python3 curses_output.py
 
