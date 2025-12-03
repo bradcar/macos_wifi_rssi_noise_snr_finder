@@ -31,9 +31,9 @@ Noise, lower is better:
 * Above -60 dBm: Very high noise, often disconnects, slow speeds, & more errors
 
 SNR (rssi - noise), higher is better:
-* Above 30: Very good
-* 14 to 25: Food
-* Below 14: Bad
+* Above 30 dB: Very good
+* 14 to 25 dB: Food
+* Below 14 dB: Bad
 
 ## Sample Outputs
 
