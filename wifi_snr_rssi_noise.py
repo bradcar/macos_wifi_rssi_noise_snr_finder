@@ -138,6 +138,7 @@ def print_with_string(noise, rssi):
 
 
 def main():
+    
     # get Wi-Fi interface (usually "en0")
     while True:
         rssi, noise = query_wifi()
