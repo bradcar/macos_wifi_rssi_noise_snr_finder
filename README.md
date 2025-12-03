@@ -54,16 +54,24 @@ office environment:
 
 ## References
 
+Very Practical Yagi-Uda design from Ham radio long-timer
+* https://www.youtube.com/watch?v=SKumu3twopc
+
 Yagi-Uda principles
 * https://en.wikipedia.org/wiki/Yagi%E2%80%93Uda_antenna
-
-Very Practical Yagi-Uda from Ham radio long-timer
-* https://www.youtube.com/watch?v=SKumu3twopc
 
 Connecting to Mac USB to external antenna with MacOS support (I hope!?!)
 * https://www.amazon.com/dp/B08BJS8FXD
 
 My focus is 2.4GHz Wifi (Raspbery Pi Picc 2 W). The latest Wifi are at higher frequencies and I have not explored their use.
 
-2.4 GHz Wifi Yagi-Uda 2.4 GHz that I will test, (will update this README.md on success!):
+2.4 GHz Wifi Yagi-Uda 2.4 GHz directional Antenna that I will test, (will update this README.md on success!):
 * https://www.amazon.com/dp/B00OCJYPCY
+
+A 2.4 GHz half-wavelength antenna is approximately 62.5 mm (about 2.46 inches) long.
+This is calculated by finding the full wavelength of a 2.4 GHz signal, which is about 125 mm, and then dividing it by two.
+The antenna's total length is split into two elements, each approximately 31.25 mm long, but need to tune.
+* Practical the quarter dipole is shorter (WTF): https://www.youtube.com/watch?v=8iBoRNyrrPM
+* 29.7mm bare copper wire
+* 28.2mm insulation before bare wire
+* 2.4 to 2.5 frequency hopping = 29.07mm 5% = 27.6mm
