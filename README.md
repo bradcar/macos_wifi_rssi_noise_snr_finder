@@ -1,13 +1,12 @@
 # MacOS Wifi - RSSI, Noise, SNR 
 ## Accesses MacOS Wifi Paramters
 
-MacOS only Wifi Mointoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
+MacOS-only Wifi Mointoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
 
 TODO: Create Wifi locator using Yagi-Udo Antenna using RSSI, Noise, and SNR
 1) Hook Yagi-Udo to Alfa external antenna
 2) Use this to locate a Raspberry Pi Pico 2 W that has a 2.4GHz Wifi.
 3) Output RSSI, Noise, and SNR (RSSI - Noise), to find Pico 2 W
-
 
 ### usage:
     python3 wifi_snr_rssi_noise.py
@@ -39,14 +38,14 @@ SNR (rssi - noise), higher is better
 ## Sample Outputs
 
 Home (desk on top of wifi)
-* RSSI:  -28 dBm
-* Noise: -94 dBm
-* SNR:    66 dB
+* RSSI:  -30 dBm, 4 bars
+* Noise: -94 dBm, very low
+* SNR:    64 dB, very good
 
 office environent
-* RSSI:  -45 dBm, 4 bars
+* RSSI:   -45 dBm, 4 bars
 * Noise: -100 dBm, very low
-* SNR:    55 dB, very good
+* SNR:     55 dB, very good
 
 ## Install prerequisites:
 

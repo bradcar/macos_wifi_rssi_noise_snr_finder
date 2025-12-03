@@ -82,9 +82,9 @@ def print_summary(noise, rssi):
     :return:
     """
     snr = rssi - noise
-    print(f"RSSI:  {rssi} dBm")
-    print(f"Noise: {noise} dBm")
-    print(f"SNR:    {rssi - noise} dB\n")
+    print(f"RSSI:  {rssi:>4} dBm")
+    print(f"Noise: {noise:>4} dBm")
+    print(f"SNR:   {rssi - noise:>4} dB\n")
 
 
 def print_with_string(noise, rssi):
@@ -132,13 +132,13 @@ def print_with_string(noise, rssi):
     else:
         snr_string = "poor"
 
-    print(f"RSSI:  {rssi} dBm, {rssi_string}")
-    print(f"Noise: {noise} dBm, {noise_string}")
-    print(f"SNR:    {snr} dB, {snr_string}\n")
+    print(f"RSSI:  {rssi:>4} dBm, {rssi_string}")
+    print(f"Noise: {noise:>4} dBm, {noise_string}")
+    print(f"SNR:   {snr:>4} dB, {snr_string}\n")
 
 
 def main():
-    
+
     # get Wi-Fi interface (usually "en0")
     while True:
         rssi, noise = query_wifi()
