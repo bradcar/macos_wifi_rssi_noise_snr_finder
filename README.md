@@ -4,14 +4,14 @@
 MacOS-only Wifi Mointoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
 
 TODO: Create Wifi locator using Yagi-Udo Antenna using RSSI, Noise, and SNR
-1) Hook Yagi-Udo to Alfa external antenna
-2) Use this to locate a Raspberry Pi Pico 2 W that has a 2.4GHz Wifi.
-3) Output RSSI, Noise, and SNR (RSSI - Noise), to find Pico 2 W
+1) Hook Yagi-Udo directional antenna to Alfa external antenna
+2) Use the Output RSSI, Noise, and SNR (RSSI - Noise), to find Pico 2 W (2.4GHz Wifi).
+3) By moving Yagi-Uda Antenna shoud be able to use direction of antenna to locate a Raspberry Pi Pico 2 W.
 
 ### usage:
     python3 wifi_snr_rssi_noise.py
 
-or Terminal Curses output:
+Or use program in Terminal Curses output:
 
     python3 curses_output.py
 
