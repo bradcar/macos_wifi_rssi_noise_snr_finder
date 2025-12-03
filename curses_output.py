@@ -21,6 +21,7 @@ def main_window(stdscr):
         start_time = time.time()
         rssi, noise = query_wifi()
         snr = rssi - noise
+        duration = time.time() - start_time
 
         stdscr.clear()
         stdscr.addstr(1, 1, "WiFi Signal Monitor")
@@ -28,9 +29,8 @@ def main_window(stdscr):
         stdscr.addstr(4, 4, f"Noise: {noise:>4} dBm")
         stdscr.addstr(5, 4, f"SNR:   {snr:>4} dB")
 
-        duration = time.time() - start_time
-        stdscr.addstr(7, 4, f"updates: {duration * 1000:.1f} msec, {1.0/duration:.0f} Hz")
-        stdscr.addstr(8, 4, f"time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        stdscr.addstr(7, 4, f"Updates:  {duration * 1000:.1f} msec, {1.0/duration:.0f} Hz")
+        stdscr.addstr(8, 4, f"Clock: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
         stdscr.refresh()
         time.sleep(0.1)

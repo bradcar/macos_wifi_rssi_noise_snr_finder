@@ -60,7 +60,7 @@ CWInterface = objc.lookUpClass("CWInterface")
 def query_wifi():
     """
     MacOS query rssi and noise form Wifi.
-    Typical execution time is ~20msec, update rate ~50 Hz.
+    Typical execution time is ~40msec, update rate ~25 Hz.
 
     :return: tuple
         noise: noise (int): Noise level in dBm.
