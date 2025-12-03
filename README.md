@@ -1,7 +1,7 @@
 # MacOS Wifi - RSSI, Noise, SNR 
 ## Accesses MacOS Wifi Paramters
 
-MacOS-only Wifi Mointoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
+MacOS-only Wifi Monitoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
 
 TODO: Create Wifi locator using Yagi-Uda Antenna using RSSI, Noise, and SNR
 1) Hook Yagi-Uda directional antenna to Alfa external antenna
