@@ -1,7 +1,7 @@
 # MacOS Wifi - RSSI, Noise, SNR 
 ## Accesses MacOS Wifi Paramters
 
-MacOS only Wifi Mointoring ofRSSI, Noise, and SNR on en0, Currently loops to shows ouput values.
+MacOS only Wifi Mointoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
 
 TODO: Create Wifi locator using Yagi-Udo Antenna using RSSI, Noise, and SNR
 1) Hook Yagi-Udo to Alfa external antenna
@@ -15,11 +15,6 @@ TODO: Create Wifi locator using Yagi-Udo Antenna using RSSI, Noise, and SNR
 or Terminal Curses output:
 
     python3 curses_output.py
-
-Install prerequisites:
-
-    pip install pyobjc
-    pip install pyobjc-framework-CoreWLAN
 
 ## Wifi Definitions
 
@@ -44,11 +39,16 @@ SNR (rssi - noise), higher is better
 ## Sample Outputs
 
 Home (desk on top of wifi)
-RSSI:  -28 dBm
-Noise: -94 dBm
-SNR:    66 dB
+* RSSI:  -28 dBm
+* Noise: -94 dBm
+* SNR:    66 dB
 
 office environent
-RSSI:  -45 dBm, 4 bars
-Noise: -100 dBm, very low
-SNR:    55 dB, very good
+* RSSI:  -45 dBm, 4 bars
+* Noise: -100 dBm, very low
+* SNR:    55 dB, very good
+
+## Install prerequisites:
+
+    pip install pyobjc
+    pip install pyobjc-framework-CoreWLAN
