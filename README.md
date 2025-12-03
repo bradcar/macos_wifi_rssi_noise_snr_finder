@@ -15,6 +15,23 @@ Or use program in Terminal Curses output:
 
     python3 curses_output.py
 
+## Sample Outputs
+
+Home (desk on top of wifi):
+* RSSI:  -30 dBm, 4 bars
+* Noise: -94 dBm, very low
+* SNR:    64 dB, very good
+
+office environment:
+* RSSI:   -45 dBm, 4 bars
+* Noise: -100 dBm, very low
+* SNR:     55 dB, very good
+
+## Install Prerequisites:
+
+    pip install pyobjc
+    pip install pyobjc-framework-CoreWLAN
+
 ## Wifi Definitions
 
 RSSI, higher is better:
@@ -35,23 +52,6 @@ SNR (rssi - noise), higher is better:
 * 14 to 25 dB: Food
 * Below 14 dB: Bad
 
-## Sample Outputs
-
-Home (desk on top of wifi):
-* RSSI:  -30 dBm, 4 bars
-* Noise: -94 dBm, very low
-* SNR:    64 dB, very good
-
-office environment:
-* RSSI:   -45 dBm, 4 bars
-* Noise: -100 dBm, very low
-* SNR:     55 dB, very good
-
-## Install Prerequisites:
-
-    pip install pyobjc
-    pip install pyobjc-framework-CoreWLAN
-
 ## References
 
 Very Practical Yagi-Uda design from Ham radio long-timer
@@ -64,14 +64,14 @@ Connecting to Mac USB to external antenna with MacOS support (I hope!?!)
 * https://www.amazon.com/dp/B08BJS8FXD
 
 My focus is 2.4GHz Wifi (Raspbery Pi Picc 2 W). The latest Wifi are at higher frequencies and I have not explored their use.
-
 2.4 GHz Wifi Yagi-Uda 2.4 GHz directional Antenna that I will test, (will update this README.md on success!):
 * https://www.amazon.com/dp/B00OCJYPCY
 
-A 2.4 GHz half-wavelength antenna is approximately 62.5 mm (about 2.46 inches) long.
-This is calculated by finding the full wavelength of a 2.4 GHz signal, which is about 125 mm, and then dividing it by two.
-The antenna's total length is split into two elements, each approximately 31.25 mm long, but need to tune.
-* Practical the quarter dipole is shorter (WTF): https://www.youtube.com/watch?v=8iBoRNyrrPM
+A 2.4 GHz half-wavelength is approximately 62.5 mm (about 2.46 inches) long.
+The full wavelength of a 2.4 GHz signal, which is about 125 mm, and then dividing it by two.
+In a Dipole antenna the length is split into two elements, each approximately 31.25 mm long.
+This all assumes perfect conditions, for example speed of light is slower in conductors and other factors will effect the length.
+* The practical quarter dipole is shorter (WTF): https://www.youtube.com/watch?v=8iBoRNyrrPM
 * 29.7mm bare copper wire
 * 28.2mm insulation before bare wire
 * 2.4 to 2.5 frequency hopping = 29.07mm 5% = 27.6mm
