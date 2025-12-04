@@ -37,10 +37,10 @@ office environment:
 ## Wifi Definitions
 
 RSSI, higher is better:
-* 4 bars is excellent: > -50 dBm
-* 3 bars is good: -50 to -60 dBm
-* 2 bars is ok: -60 to -70 dBm
-* 1 bar is fair: < -70 dBm
+* > -50 dBm: 4 bars is excellent
+*  -50 to -60 dBm: 3 bars is good
+* -60 to -70 dBm: 2 bars is ok
+*  < -70 dBm: 1 bar is fair
 
 Noise, lower is better:
 * -90 to -100 dBm: Extremely low noise levels, ideal for WiFi
