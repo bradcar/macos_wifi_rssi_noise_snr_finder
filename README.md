@@ -51,7 +51,7 @@ Noise, lower is better:
 
 SNR (rssi - noise), higher is better:
 * Above 30 dB: Very good
-* 14 to 25 dB: Food
+* 14 to 25 dB: Good
 * Below 14 dB: Bad
 
 ## References
