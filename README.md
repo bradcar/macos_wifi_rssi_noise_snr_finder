@@ -1,7 +1,9 @@
 # MacOS Wifi - RSSI, Noise, SNR 
 ## Accesses MacOS Wifi Paramters
 
-MacOS-only Wifi Monitoring of RSSI, Noise, and SNR on en0. Currently it just loops to shows ouput values.
+MacOS-only Wifi Monitoring of RSSI, Noise, and SNR on en0. Currently, it just loops to shows ouput values.
+Also prints out the name of the en0 Wifi network it is monitoring. However, Python must be enabled in System Settings >
+Privacy & Security> Location Services.
 
 TODO: Create Wifi locator using Yagi-Uda Antenna using RSSI, Noise, and SNR
 1) Hook Yagi-Uda directional antenna to Alfa external antenna
@@ -62,7 +64,7 @@ Very Practical Yagi-Uda design from Ham radio long-timer
 Yagi-Uda principles
 * https://en.wikipedia.org/wiki/Yagi%E2%80%93Uda_antenna
 
-Connecting to Mac USB to external antenna with MacOS support (I hope!?!)
+Connecting to Mac USB to external antenna with macOS support (I hope!?!)
 * https://www.amazon.com/dp/B08BJS8FXD
 
 My focus is 2.4GHz Wifi (Raspbery Pi Picc 2 W). The latest Wifi are at higher frequencies and I have not explored their use.
@@ -72,7 +74,7 @@ My focus is 2.4GHz Wifi (Raspbery Pi Picc 2 W). The latest Wifi are at higher fr
 A 2.4 GHz half-wavelength is approximately 62.5 mm (about 2.46 inches) long.
 The full wavelength of a 2.4 GHz signal, which is about 125 mm, and then dividing it by two.
 In a Dipole antenna the length is split into two elements, each approximately 31.25 mm long.
-This all assumes perfect conditions, for example speed of light is slower in conductors and other factors will effect the length.
+This all assumes perfect conditions, for example speed of light is slower in conductors and other factors will affect the length.
 * The practical quarter dipole is shorter (WTF): https://www.youtube.com/watch?v=8iBoRNyrrPM
 * 29.7mm bare copper wire
 * 28.2mm insulation before bare wire
