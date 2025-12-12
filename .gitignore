@@ -183,3 +183,4 @@ cython_debug/
 .cursorindexingignore
 .idea/macos_wifi_rssi_noise_snr_finder.iml
 .idea/macos_wifi_rssi_noise_snr_finder.iml
+/unimplemented
