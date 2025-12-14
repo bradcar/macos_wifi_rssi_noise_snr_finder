@@ -15,6 +15,7 @@
 # Install prerequisites:
 #    pip install pyobjc
 #    pip install pyobjc-framework-CoreWLAN
+#    Python must be enabled in: System Settings > Privacy & Security > Location Services
 #
 # ----------------
 # RSSI, higher is better

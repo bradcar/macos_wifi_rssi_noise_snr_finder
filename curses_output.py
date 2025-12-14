@@ -18,6 +18,11 @@
 #     Updates:  15.4 msec, 65 Hz
 #     Clock: 2025-12-04 19:44:38
 #
+# Install prerequisites:
+#    pip install pyobjc
+#    pip install pyobjc-framework-CoreWLAN
+#    Python must be enabled in: System Settings > Privacy & Security > Location Services
+#
 import curses
 import time
 from datetime import datetime
