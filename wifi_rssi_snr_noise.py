@@ -42,7 +42,7 @@
 # Noise: -94 dBm
 # SNR:    66 dB
 #
-# office environent
+# office environment
 # RSSI:  -45 dBm, 4 bars
 # Noise: -100 dBm, very low
 # SNR:    55 dB, very good

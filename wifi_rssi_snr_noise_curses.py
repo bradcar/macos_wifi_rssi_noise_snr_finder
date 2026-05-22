@@ -1,12 +1,12 @@
 # curses_output.py
 #
-# Simple terinal output using curses to overwrite results to show continuous updates
+# Simple terminal output using curses to overwrite results to show continuous updates
 # of RSSI, noise, SNR with update duration in msec, frequency and current datetime.
 # Also prints out the name of the en0 Wifi network it is monitoring.
 # However, Python must be enabled in System Settings > Privacy & Security> Location Services.
 #
 # Usage:
-#   in termainal, python3 curses_output.py
+#   in terminal, python3 curses_output.py
 #
 # Sample output:
 #  WiFi Signal Monitor: XYZ
