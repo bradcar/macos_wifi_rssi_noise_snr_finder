@@ -1,4 +1,4 @@
-# curses_output.py
+# wifi_rssi_snr_noise_curses.py
 #
 # Simple terminal output using curses to overwrite results to show continuous updates
 # of RSSI, noise, SNR with update duration in msec, frequency and current datetime.
@@ -6,7 +6,7 @@
 # However, Python must be enabled in System Settings > Privacy & Security> Location Services.
 #
 # Usage:
-#   in terminal, python3 curses_output.py
+#   in terminal, python3 wifi_rssi_snr_noise_curses.py
 #
 # Sample output:
 #  WiFi Signal Monitor: XYZ
@@ -27,7 +27,7 @@ import curses
 import time
 from datetime import datetime
 
-from wifi_snr_rssi_noise import query_wifi, enable_ssid_name
+from wifi_rssi_snr_noise import query_wifi, enable_ssid_name
 
 
 def main_window(stdscr):

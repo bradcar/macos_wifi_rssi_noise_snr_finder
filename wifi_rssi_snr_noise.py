@@ -1,4 +1,4 @@
-# wifi_snr_rssi_noise.py
+# wifi_rssi_snr_noise.py
 #
 # macOS only RSSI, Noise, and SNR on en0, Currently loops to show  values.
 # Also prints out the name of the en0 Wifi network it is monitoring.
@@ -10,7 +10,7 @@
 # 3) Output RSSI, Noise, and SNR (RSSI - Noise), to find Pico 2 W
 #
 # usage:
-#   python3 wifi_snr_rssi_noise.py
+#   python3 wifi_rssi_snr_noise.py
 #
 # Install prerequisites:
 #    pip install pyobjc
