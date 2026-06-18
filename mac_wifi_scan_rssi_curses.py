@@ -1,12 +1,13 @@
 # mac_wifi_scan_rssi.py
 """
-runs on Macbook Pro in MacOS
+runs on Macbook Pro in macOS
 2.4, 5, & 6 GHz Wifi - RSSI ONLY
 Scans repeatedly, sorted by strongest RSSI first.
-CANNOT get noise & SNR on unconnected networks. For connected network use: wifi_rssi_snr_noise.py
+CANNOT get noise & SNR on unconnected networks. For connected network use: mac_wifi_rssi_snr_noise.py
 
 NOTES:
   1) Python MUST be enabled in System Settings > Privacy & Security> Location Services.
+  2) Make sure window is larger than print strings to avoid random curses crashes.
 
 Usage:
   Curses requires running in terminal:
@@ -18,6 +19,8 @@ from datetime import datetime
 
 from CoreWLAN import CWWiFiClient
 
+BLOCK_LESS_THAN_ONE_BAR = True
+BLOCK_NON_2_4_G = True
 
 def init_wifi():
     """Initialize CoreWLAN client and returns the active Wi-Fi"""
@@ -60,7 +63,7 @@ def scan_and_print(interface, stdscr):
     if not interface:
         stdscr.addstr(0, 0, "Error: Wi-Fi interface not found or initialized.")
         stdscr.refresh()
-        return False
+        return False, 1
 
     # Scan for networks, include (None) and hidden networks (True)
     networks, error = interface.scanForNetworksWithSSID_includeHidden_error_(None, True, None)
@@ -104,13 +107,12 @@ def scan_and_print(interface, stdscr):
         band = map_band_to_string(net)
         rssi_string = rssi_bar_string(rssi)
 
-        stdscr.addstr(current_row, 0, f"{ssid:<23} {band:<7} {bssid} {rssi:>4} dBm  {rssi_string}")
-        current_row += 1
+        if not (BLOCK_LESS_THAN_ONE_BAR and rssi < -80) and not (BLOCK_NON_2_4_G and band != "2.4 GHz"):
+            stdscr.addstr(current_row, 0, f"{ssid:<23} {band:<7} {bssid} {rssi:>4} dBm  {rssi_string}")
+            current_row += 1
 
     stdscr.refresh()
     return True, current_row
-
-
 
 
 def main(stdscr):
@@ -131,10 +133,31 @@ def main(stdscr):
             if success:
                 duration = time.time() - last_update
                 last_update = time.time()
-                stdscr.addstr(current_row, 2,
-                              f"Clock: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, Update every {duration:.2f} secs")
+
+                max_y, max_x = stdscr.getmaxyx()
+
+                footer1 = (
+                    f"Clock: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, "
+                    f"Update every {duration:.2f} secs"
+                )
+
+                footer2 = (
+                    "Blocked <1-bar and non 2.4GHz"
+                    if BLOCK_LESS_THAN_ONE_BAR and BLOCK_NON_2_4_G
+                    else "Blocked <1-bar"
+                    if BLOCK_LESS_THAN_ONE_BAR
+                    else "Blocked non 2.4GHz"
+                    if BLOCK_NON_2_4_G
+                    else ""
+                )
+
+                if current_row < max_y:
+                    stdscr.addstr(current_row, 2, footer1[:max_x - 3])
+
+                if current_row + 1 < max_y:
+                    stdscr.addstr(current_row + 1, 2, footer2[:max_x - 3])
                 stdscr.refresh()
-                # retry in 6 sec (MacOS slow)
+                # retry in 6 sec (macOS slow)
                 time.sleep(6)
             else:
                 # If the hardware was busy, retry in 1 second

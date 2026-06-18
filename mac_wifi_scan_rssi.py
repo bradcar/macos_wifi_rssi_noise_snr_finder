@@ -3,7 +3,7 @@
 runs on Macbook Pro in MacOS
 2.4, 5, & 6 GHz Wifi - RSSI ONLY
 Scans repeatedly, sorted by strongest RSSI first.
-CANNOT get noise & SNR on unconnected networks. For connected network use: wifi_rssi_snr_noise.py
+CANNOT get noise & SNR on unconnected networks. For connected network use: mac_wifi_rssi_snr_noise.py
 
 NOTES:
   1) Python MUST be enabled in System Settings > Privacy & Security> Location Services.
@@ -16,6 +16,9 @@ import time
 from datetime import datetime
 
 from CoreWLAN import CWWiFiClient
+
+BLOCK_LESS_THAN_ONE_BAR = True
+BLOCK_NON_2_4_G = True
 
 
 def init_wifi():
@@ -93,8 +96,9 @@ def scan_and_print(interface):
         band = map_band_to_string(net)
         rssi_string = rssi_bar_string(rssi)
 
-        print(f"{ssid:<23} {band:<7} {bssid} {rssi:>4} dBm  {rssi_string}")
-        current_row += 1
+        if not (BLOCK_LESS_THAN_ONE_BAR and rssi <= -80) and not (BLOCK_NON_2_4_G and band != "2.4 GHz"):
+            print(f"{ssid:<23} {band:<7} {bssid} {rssi:>4} dBm  {rssi_string}")
+            current_row += 1
 
     return True, current_row
 
@@ -110,8 +114,11 @@ def main():
             if success:
                 duration = time.time() - last_update
                 last_update = time.time()
-                print(f"  Clock: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, Update every {duration:.2f} secs\n")
-                # retry in 6 sec (MacOS slow)
+                print(f"  Clock: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, Update every {duration:.2f} secs")
+                print(
+                    f"  Blocked <1-bar and non 2.4GHz" if BLOCK_LESS_THAN_ONE_BAR and BLOCK_NON_2_4_G else f"Blocked <1-bar" if BLOCK_LESS_THAN_ONE_BAR else f"Blocked non 2.4GHz" if BLOCK_NON_2_4_G else "")
+                print()
+                # MacOS ONLY retry in 6 sec (MacOS slow)
                 time.sleep(6)
             else:
                 # If the hardware was busy, retry in 1 second

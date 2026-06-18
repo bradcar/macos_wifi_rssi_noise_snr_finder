@@ -1,4 +1,4 @@
-# wifi_rssi_snr_noise_curses.py
+# mac_wifi_rssi_snr_noise_curses.py
 #
 # Simple terminal output using curses to overwrite results to show continuous updates
 # of RSSI, noise, SNR with update duration in msec, frequency and current datetime.
@@ -6,7 +6,7 @@
 # However, Python must be enabled in System Settings > Privacy & Security> Location Services.
 #
 # Usage:
-#   in terminal, python3 wifi_rssi_snr_noise_curses.py
+#   in terminal, python3 mac_wifi_rssi_snr_noise_curses.py
 #
 # Sample output:
 #  WiFi Signal Monitor: XYZ
@@ -27,56 +27,24 @@ import curses
 import time
 from datetime import datetime
 
-from wifi_rssi_snr_noise import query_wifi, enable_ssid_name
+from mac_wifi_rssi_snr_noise import get_ssid, query_wifi, rssi_snr_noise_to_string
 
 
 def main_window(stdscr):
-    enable_ssid_name()
     curses.curs_set(0)  # hide cursor
     stdscr.nodelay(True)
 
+    ssid = get_ssid()
     while True:
         start_time = time.time()
-        rssi, noise, ssid = query_wifi()
+        rssi, noise = query_wifi()
         snr = rssi - noise
         duration = time.time() - start_time
 
-        # RSSI quality, higher is better
-        if rssi > -50:
-            rssi_string = "4 bars"
-        elif rssi > -60:
-            rssi_string = "3 bars"
-        elif rssi > -70:
-            rssi_string = "2 bars"
-        elif rssi > -80:
-            rssi_string = "1 bar"
-        else:
-            rssi_string = "0 bar"
-
-        # Noise level, lower is better
-        if noise < -90:
-            noise_string = "very low"
-        elif noise > -80:
-            noise_string = "low"
-        elif noise > -70:
-            noise_string = "moderate"
-        elif noise > -60:
-            noise_string = "high"
-        else:
-            noise_string = "very high"
-
-        # SNR quality, higher is better
-        if snr > 30:
-            snr_string = "very good"
-        elif snr > 25:
-            snr_string = "good"
-        elif snr > 14:
-            snr_string = "ok"
-        else:
-            snr_string = "poor"
+        rssi_string, snr_string, noise_string = rssi_snr_noise_to_string(rssi, snr, noise)
 
         stdscr.clear()
-        stdscr.addstr(1, 1, f"WiFi Signal Monitor: {ssid}")
+        stdscr.addstr(1, 1, f"WiFi Signal Monitor (macOS): {ssid}")
         stdscr.addstr(3, 4, f"RSSI: {rssi:>4} dBm  {rssi_string}")
         stdscr.addstr(4, 4, f"Noise:{noise:>4} dBm  {noise_string}")
         stdscr.addstr(5, 4, f"SNR:  {snr:>4} dB   {snr_string}")
