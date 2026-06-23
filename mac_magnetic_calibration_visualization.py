@@ -213,14 +213,21 @@ def main():
         scatter1, ax=ax1, label="Z Axis Intensity Vector", shrink=0.6, pad=0.1
     )
 
-    # Set uniform aspect limits for the raw data to showcase true geometric distortion
-    max_range = max(max(rx) - min(rx), max(ry) - min(ry), max(rz) - min(rz)) / 2.0
-    mid_x = (max(rx) + min(rx)) / 2.0
-    mid_y = (max(ry) + min(ry)) / 2.0
-    mid_z = (max(rz) + min(rz)) / 2.0
-    ax1.set_xlim(mid_x - max_range, mid_x + max_range)
-    ax1.set_ylim(mid_y - max_range, mid_y + max_range)
-    ax1.set_zlim(mid_z - max_range, mid_z + max_range)
+    # Set uniform aspect limits for the raw data to show geometric distortion
+    # max_range = max(max(rx) - min(rx), max(ry) - min(ry), max(rz) - min(rz)) / 2.0
+    # mid_x = (max(rx) + min(rx)) / 2.0
+    # mid_y = (max(ry) + min(ry)) / 2.0
+    # mid_z = (max(rz) + min(rz)) / 2.0
+    # ax1.set_xlim(mid_x - max_range, mid_x + max_range)
+    # ax1.set_ylim(mid_y - max_range, mid_y + max_range)
+    # ax1.set_zlim(mid_z - max_range, mid_z + max_range)
+
+    # Set uniform aspect limits for the raw data to show geometric distortion
+    max_plot = max(max(rx), max(ry), max(rz))
+    min_plot = min(min(rx), min(ry), min(rz))
+    ax1.set_xlim(max_plot, min_plot)
+    ax1.set_ylim(max_plot, min_plot)
+    ax1.set_zlim(max_plot, min_plot)
 
     # -----------------------------------------------------------------
     # RIGHT AXIS: Mapped Normal Data (Centered Unit Sphere)
@@ -241,7 +248,7 @@ def main():
         pad=0.1,
     )
 
-    # Force a strict normalized view layout bounding box from -1 to +1
+    # Force a uniform normalized bounding box from -1 to +1
     ax2.set_xlim(-1.1, 1.1)
     ax2.set_ylim(-1.1, 1.1)
     ax2.set_zlim(-1.1, 1.1)
