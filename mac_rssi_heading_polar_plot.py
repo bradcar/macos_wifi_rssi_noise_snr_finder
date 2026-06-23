@@ -32,6 +32,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+import time
+from datetime import datetime
+from pathlib import Path
 
 # dBm bounds for clamping values and gridlines
 RSSI_MAX_PLOT_CONSTANT = -20
@@ -39,12 +42,19 @@ RSSI_MIN_PLOT_CONSTANT = -99
 Y_TICK_MAX = -10
 Y_TICK_MIN = -90
 
+PIXELS = 240
+DPI = 100
+SIZE_INCHES = PIXELS / DPI
 
-def plot_rssi_polar(csv_file):
+
+def read_theata_rssi_from_csv(csv_file):
     df = pd.read_csv(csv_file)
     theta = np.deg2rad(df['degree'])
     rssi = df['rssi']
+    return df, rssi, theta
 
+
+def plot_rssi_polar(df, rssi, theta, subtitle, file_name="plot.jpg"):
     # Detect peak RSSI, or mid of plateau of peaks (issue? maybe 0 to 359° wrap)
     valid_data = df[df['rssi'] > -98]
     if valid_data.empty:
@@ -54,14 +64,51 @@ def plot_rssi_polar(csv_file):
         max_rssi = valid_data['rssi'].max()
         peak_cluster = valid_data[valid_data['rssi'] == max_rssi]
         peak_rssi = float(max_rssi)
-        peak_degree = float(peak_cluster['degree'].mean())
+
+        # Get first and last target degrees in the peak sequence
+        first_deg = float(peak_cluster['degree'].iloc[0])
+        last_deg = float(peak_cluster['degree'].iloc[-1])
+        peak_degree = float(peak_cluster['degree'].mean())  # middle angle of disparate values of same peak value
+
+        # calc shortest path arc connecting, accounting for 360° wrap
+        diff = (last_deg - first_deg) % 360
+        if diff > 180:
+            # Shortest arc crosses the 0° boundary
+            arc_degrees = np.linspace(last_deg, first_deg + 360, num=100) % 360
+        else:
+            # Shortest arc is continuous
+            arc_degrees = np.linspace(first_deg, last_deg, num=100)
+
+        arc_radians = np.deg2rad(arc_degrees)
+        arc_radii = np.full_like(arc_radians, peak_rssi)
+
     print(f"Peak detected: {peak_rssi:.0f} dBm @ {peak_degree:.0f}° degrees")
 
-    fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+    # fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+    fig, ax = plt.subplots(
+        figsize=(SIZE_INCHES, SIZE_INCHES),
+        dpi=DPI,
+        subplot_kw={'projection': 'polar'}
+    )
+
     ax.set_theta_zero_location("N")
     ax.set_theta_direction(-1)
+    custom_offset_degrees = 27
+    ax.set_theta_offset(np.deg2rad(custom_offset_degrees))
 
-    # Circular grid layout
+    # Circular x-axis (angular degree) labels every 15°, with bold for 45° intervals
+    thetaticks = np.arange(0, 360, 15)
+    ax.set_thetagrids(thetaticks, labels=[f"{x}°" for x in thetaticks])
+
+    for tick, label in zip(thetaticks, ax.get_xticklabels()):
+        if tick % 45 == 0:
+            label.set_weight('bold')
+            label.set_fontsize(11)
+        else:
+            # label.set_style('italic')
+            label.set_fontsize(9)
+
+    # Radial y-axis (RSSI strength) labels
     yticks = np.arange(Y_TICK_MIN, Y_TICK_MAX, 10)
     ax.set_yticks(yticks)
     ax.set_yticklabels([f"{y}" for y in yticks])
@@ -69,24 +116,24 @@ def plot_rssi_polar(csv_file):
     rssi_max_plot = RSSI_MAX_PLOT_CONSTANT
     rssi_min_plot = RSSI_MIN_PLOT_CONSTANT
 
-    # Autoscale, peak is 80% of the polar plot limit
+    # Autoscale radial y-axis peak is 80% of the polar plot limit
     if peak_rssi != -99:
         rssi_max_plot = rssi_min_plot + (peak_rssi - rssi_min_plot) * 1.2
         print(f"Plot boundaries: {rssi_max_plot:.0f} to {rssi_min_plot:.0f} dBm")
 
     ax.set_ylim(rssi_min_plot, rssi_max_plot)
 
-    # Plot RSSI values for 360°
-    ax.plot(theta, rssi, color='blue', linewidth=0.7)
-    ax.fill(theta, rssi, color='blue', alpha=0.3)
+    # Plot RSSI strength values for 360°
+    ax.plot(theta, rssi, color='green', linewidth=0.7)
+    ax.fill(theta, rssi, color='green', alpha=0.3)
 
     # Title with peak RSSI info in red font, csv file name at bottom
     title_text = "RSSI Strength"
-    red_peak_text = f"(Peak: {peak_rssi:.0f}dBm @ {peak_degree}°)"
-    file_text = f"{csv_file}"
+    red_peak_text = f"(Peak: {peak_rssi:.0f}dBm @ {peak_degree:.1f}°)"
+    file_text = f"{subtitle}"
     fig.text(0.32, 0.95, title_text, ha='center', fontsize=12, fontweight='bold')
     fig.text(0.45, 0.95, red_peak_text, ha='left', fontsize=12, fontweight='bold', color='red')
-    fig.text(0.60, 0.03, file_text, ha='left', fontsize=8)
+    fig.text(0.05, 0.03, file_text, ha='left', fontsize=8)
 
     # Draw peak indicator with red dashed line
     peak_rad = np.deg2rad(peak_degree)
@@ -99,6 +146,10 @@ def plot_rssi_polar(csv_file):
     else:
         # default draw red line from center to plot edge
         ax.plot([peak_rad, peak_rad], [rssi_min_plot, peak_rssi], color='red', linestyle='--', linewidth=1)
+
+    # Draw the red peak arc overlay at the peak radius line
+    if len(peak_cluster) > 1:
+        ax.plot(arc_radians, arc_radii, color='red', linewidth=1, linestyle='-')
 
     # Print peak RSSI outside plot edge, xytext has 20px outward offset
     ax.annotate(f"{peak_rssi:.0f} dBm",
@@ -114,13 +165,27 @@ def plot_rssi_polar(csv_file):
 
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.show()
+    #plt.savefig(file_name, format='jpg', dpi=300, bbox_inches='tight')
+    plt.savefig(file_name, format='jpg', dpi=DPI)
 
 
 def main():
     print("Polar plot of RSSI strength at 360 degrees\n")
     print("Magnetic North is 0° degrees")
     if len(sys.argv) > 1:
-        plot_rssi_polar(sys.argv[1])
+        csv_name = sys.argv[1]
+        df, rssi, theta = read_theata_rssi_from_csv(csv_name)
+
+        # create directory & file for plots
+        dir = "polar_plots"
+        plot_dir = Path(dir)
+        plot_dir.mkdir(exist_ok=True)
+        base_name = Path(csv_name).stem
+        file_path = plot_dir / f"{base_name}-{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.jpg"
+
+        start_time = time.time()
+        plot_rssi_polar(df, rssi, theta, csv_name, file_path)
+        print(f"plot time = {(time.time() - start_time):.2f} secs")
     else:
         print("Please enter a csv file")
 
